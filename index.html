@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<script src="http://canvasengine.net/cdn/canvasengine-latest.all.min.js"></script>
+<script src="js/jquery-3.1.1.min.js"></script>
+<script src="js/jquery-ui.js"></script>
+<center><canvas id="canvas_id" width="1600" height="800" style="border:1px solid #000000;"></canvas>
+</center>
+
+<embed src="assets/music/Marvel Vs. Capcom 2 Character Select.mp3" width="1" height="1" loop="true" autostart="true" hidden="true" />
+
+
+
+
+<style>
+#canvas_id {
+    z-index:1;
+}
+
+</style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+window.onload = function() {
+    var c=document.getElementById("canvas_id");
+    var ctx=c.getContext("2d");
+    ctx.font = "15px Arial";
+    ctx.fillText("Choose your character!!",700,10);
+
+};
+
+
+var canvas = document.getElementById("canvas_id"),
+    ctx = canvas.getContext("2d");
+
+var background = new Image();
+background.src = "assets/Scenes/StartGame.png";
+
+background.onload = function(){
+    ctx.drawImage(background,-100,-270);   
+    ctx.drawImage(dio,700,30);
+
+}
+
+
+
+</script>
+
+
+
+
+<script>//CHARACTERS
+var $Dio = $('<input/>').attr({
+    type: 'button',
+    name: 'Dio',
+    value: '',
+    id: 'Dio',
+    style: 'position:absolute; background-image: url("assets/characters/Face_Icons/Dio.png"); width: 160px; height: 160px; top:40px; left: 860px; border:1px solid #000000;'
+});
+$('body').append($Dio);
+$(document).on("click", "#Dio", function() {
+    alert('WIP');
+});
+
+
+
+var $StartButton = $('<input/>').attr({
+    type: 'button',
+    name: 'button',
+    value: 'Start',
+    id: 'StartButton',
+    style: 'position:absolute; top:750px;left:910px; zindex:2; background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none;'
+});
+$('body').append($StartButton);
+$(document).on("click", "#StartButton", function() {
+    alert('WIP');
+});
+</script>
