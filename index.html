@@ -15,6 +15,7 @@
     z-index:1;
 }
 
+
 </style>
 
 
@@ -63,6 +64,9 @@ background.onload = function(){
 
 
 <script>//CHARACTERS
+
+var selected = 0
+
 var $Dio = $('<input/>').attr({
     type: 'button',
     name: 'Dio',
@@ -71,11 +75,43 @@ var $Dio = $('<input/>').attr({
     style: 'position:absolute; background-image: url("assets/characters/Face_Icons/Dio.png"); width: 160px; height: 160px; top:40px; left: 860px; border:1px solid #000000;'
 });
 $('body').append($Dio);
-$(document).on("click", "#Dio", function() {
-    alert('WIP');
+$(document).on("click", "#Dio", "", function() {
+    if(selected == 1) {
+        alert('you already chose this character!');
+        Diosprite.style.visibility = 'invisible';
+        return
+    }
+    selected = 1;
+    ctx.font = "32px Verdana";
+    ctx.fillText("Name: Dio Brando",44,25);
 });
 
 
+
+var $Diosprite = $('<div/>').attr({
+    name: 'Diosprite',
+    value: '',
+    id: 'Diosprite',
+    style: 'position:absolute; background-image: url("assets/characters/Dio.gif"); width: 100px; height: 145px; top:400px; left: 860px; visibility: hidden;'
+});
+$('body').append($Diosprite);
+$(document).on("click", "#Dio", "", function() {
+    Diosprite.style.visibility = 'visible';
+    if(selected == 1) {
+        Diosprite.style.visibility = 'invisible';
+        return
+    }
+});
+
+
+
+
+
+
+
+
+
+//This is the Start button
 
 var $StartButton = $('<input/>').attr({
     type: 'button',
