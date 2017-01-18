@@ -2,6 +2,10 @@
 <script src="http://canvasengine.net/cdn/canvasengine-latest.all.min.js"></script>
 <script src="js/jquery-3.1.1.min.js"></script>
 <script src="js/jquery-ui.js"></script>
+
+
+
+
 <center><canvas id="canvas_id" width="1600" height="800" style="border:1px solid #000000;"></canvas>
 </center>
 
@@ -14,6 +18,12 @@
 #canvas_id {
     z-index:1;
 }
+
+#body {
+    position: block;
+}
+
+
 
 
 </style>
@@ -51,8 +61,7 @@ var background = new Image();
 background.src = "assets/Scenes/StartGame.png";
 
 background.onload = function(){
-    ctx.drawImage(background,-100,-270);   
-    ctx.drawImage(dio,700,30);
+    ctx.drawImage(background,-100,-270);  
 
 }
 
@@ -67,24 +76,22 @@ background.onload = function(){
 
 var selected = 0
 
+
+
 var $Dio = $('<input/>').attr({
     type: 'button',
     name: 'Dio',
     value: '',
     id: 'Dio',
-    style: 'position:absolute; background-image: url("assets/characters/Face_Icons/Dio.png"); width: 160px; height: 160px; top:40px; left: 860px; border:1px solid #000000;'
+    style: 'position:absolute; background-image: url("assets/characters/Face_Icons/Dio.png"); width: 160px; height: 160px; top:40px; left: 715px; border:1px solid #000000; visibility: visible;'
 });
 $('body').append($Dio);
 $(document).on("click", "#Dio", "", function() {
-    if(selected == 1) {
-        alert('you already chose this character!');
-        Diosprite.style.visibility = 'invisible';
-        return
-    }
     selected = 1;
-    ctx.font = "32px Verdana";
-    ctx.fillText("Name: Dio Brando",44,25);
 });
+
+
+
 
 
 
@@ -92,18 +99,16 @@ var $Diosprite = $('<div/>').attr({
     name: 'Diosprite',
     value: '',
     id: 'Diosprite',
-    style: 'position:absolute; background-image: url("assets/characters/Dio.gif"); width: 100px; height: 145px; top:400px; left: 860px; visibility: hidden;'
+    style: 'position:absolute; background-image: url("assets/characters/Dio.gif"); width: 100px; height: 145px; top:400px; left: 750px; visibility: hidden;'
 });
 $('body').append($Diosprite);
-$(document).on("click", "#Dio", "", function() {
+$(document).on("click", "#Dio", function() {
     Diosprite.style.visibility = 'visible';
-    if(selected == 1) {
-        Diosprite.style.visibility = 'invisible';
-        return
-    }
+$(document).on("click", "#StartButton", function() {
+    Diosprite.style.visibility = 'hidden';
 });
 
-
+});
 
 
 
@@ -118,10 +123,41 @@ var $StartButton = $('<input/>').attr({
     name: 'button',
     value: 'Start',
     id: 'StartButton',
-    style: 'position:absolute; top:750px;left:910px; zindex:2; background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none;'
+    style: 'position:absolute; top:750px;left:750px; zindex:2; background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none;'
 });
 $('body').append($StartButton);
 $(document).on("click", "#StartButton", function() {
-    alert('WIP');
+
+    if(selected == 1) {
+        ctx.font = "100px Verdana";
+        ctx.fillText("VS",720,450);
+        Dio.style.visibility = 'hidden';
+
+    }
+    if(selected == 0) {
+
+        alert('You do not have a character selected!'); 
+    }
+
 });
 </script>
+
+
+
+
+<script>
+
+//Controls
+
+
+/*var $Actions = $('<div/>').attr({
+    name: 'Actions',
+    value: '',
+    id: 'actions',
+    style: 'position:absolute; top:750px;left:750px; zindex:3; background-color: #000000; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none;'
+});
+$('body').append($Actions);
+$(document).on("click", "#StartButton", "", function() {
+
+
+});*/
