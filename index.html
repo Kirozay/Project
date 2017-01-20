@@ -6,7 +6,7 @@
 
 
 
-<center><canvas id="canvas_id" width="1600" height="800" style="border:1px solid #000000;"></canvas>
+<center><canvas id="canvas_id" width="1300" height="700" style="border:1px solid #000000;"></canvas>
 </center>
 
 <embed src="assets/music/Marvel Vs. Capcom 2 Character Select.mp3" width="1" height="1" loop="true" autostart="true" hidden="true" />
@@ -24,7 +24,9 @@
 }
 
 
-
+body {
+    overflow:hidden;
+}
 
 </style>
 
@@ -61,7 +63,7 @@ var background = new Image();
 background.src = "assets/Scenes/StartGame.png";
 
 background.onload = function(){
-    ctx.drawImage(background,-100,-270);  
+    ctx.drawImage(background,-100,-270);
 
 }
 
@@ -123,15 +125,18 @@ var $StartButton = $('<input/>').attr({
     name: 'button',
     value: 'Start',
     id: 'StartButton',
-    style: 'position:absolute; top:750px;left:750px; zindex:2; background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none;'
+    style: 'position:absolute; top:600px;left:750px; zindex:2; background-color: #4CAF50; border: none; color: white; padding: 15px 32px; text-align: center; text-decoration: none; visibility: visible;'
 });
 $('body').append($StartButton);
 $(document).on("click", "#StartButton", function() {
 
     if(selected == 1) {
         ctx.font = "100px Verdana";
-        ctx.fillText("VS",720,450);
         Dio.style.visibility = 'hidden';
+        StartButton.style.visibility = 'hidden';
+        startgame = 1
+        background.src = "assets/Scenes/Hatfield_Forest_1.png";
+        requestAnimationFrame(fun);
 
     }
     if(selected == 0) {
@@ -139,7 +144,11 @@ $(document).on("click", "#StartButton", function() {
         alert('You do not have a character selected!'); 
     }
 
+
 });
+
+
+
 </script>
 
 
@@ -161,3 +170,87 @@ $(document).on("click", "#StartButton", "", function() {
 
 
 });*/
+
+var diosprite = {
+    height: 100,
+    width: 145,
+    x: 100,
+    y: 111
+}
+
+
+
+var startgame = 0
+var dx = 0, dy = 0;
+var speed = 100; // px per second
+
+var activeKey = 0;
+document.addEventListener('keydown', function(e) {
+    if (activeKey == e.keyCode) return;
+    activeKey = e.keyCode;
+    
+    //left
+    if (e.keyCode == 37) {
+        console.log('start moving LEFT');
+        dx = -1;
+    }
+    //top
+    else if (e.keyCode == 38) {
+        console.log('start moving UP');
+        dy = -1;
+    }
+    //right
+    else if (e.keyCode == 39) {
+        console.log('start moving RIGHT');
+        dx = 1;
+    }
+    //bottom
+    else if (e.keyCode == 40) {
+        console.log('start moving DOWN');
+        dy = 1;
+    }
+});
+document.addEventListener('keyup', function(e) {
+    switch (e.keyCode) {
+        case 37: // left
+        case 39: // right
+            console.log('stop moving HOR');
+            dx = 0;
+            break;
+            
+        case 38: // up
+        case 40: // down
+            console.log('stop moving VER');
+            dy = 0;
+            break;
+    }
+    
+    activeKey = 0;
+});
+
+function renderdio(){
+    ctx.fillRect(diosprite.x, diosprite.y, diosprite.width, diosprite.height);
+}
+
+function updateCanvas(){
+    background.src = "assets/Scenes/StartGame.png";
+    if(startgame == 1) {
+        background.src = "assets/Scenes/Hatfield_Forest_1.png";
+    }
+}
+
+
+
+
+function fun(){
+    updateCanvas();
+    
+    diosprite.x += dx / 60 * speed;
+    diosprite.y += dy / 60 * speed;
+    renderdio();
+    
+    requestAnimationFrame(fun);
+}
+
+
+</script>
