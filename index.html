@@ -51,7 +51,6 @@ window.onload = function() {
     var c=document.getElementById("canvas_id");
     var ctx=c.getContext("2d");
     ctx.font = "15px Arial";
-    ctx.fillText("Choose your character!!",700,10);
 
 };
 
@@ -76,7 +75,12 @@ background.onload = function(){
 
 <script>//CHARACTERS
 
-var selected = 0
+var DIO = 0;
+
+var SHREK = 0;
+
+
+var selected = 0;
 
 
 
@@ -92,7 +96,45 @@ $(document).on("click", "#Dio", "", function() {
     selected = 1;
 });
 
+var $Shrek = $('<input/>').attr({
+    type: 'button',
+    name: 'Shrek',
+    value: '',
+    id: 'Shrek',
+    style: 'position:absolute; background-image: url("assets/characters/shrek.png"); width: 160px; height: 160px; top:40px; left: 500px; border:1px solid #000000; visibility: visible;'
+});
+$('body').append($Shrek);
+$(document).on("click", "#Shrek", "", function() {
+    if(selected == 1) {
+        DIO = 0
+        SHREK = 1
+    }
+    selected = 1;
+    SHREK = 1
+}); 
 
+
+//Menus
+
+
+var faceicon = new Image();
+faceicon.src = "none"
+faceicon.x = 1
+faceicon.y = 1
+faceicon.style = "position:absolute; width: 100px; height: 145px; top:400px; left: 750px; visibility: hidden;"
+
+
+
+
+
+
+
+
+
+
+
+
+//Sprites
 
 
 
@@ -133,10 +175,13 @@ $(document).on("click", "#StartButton", function() {
     if(selected == 1) {
         ctx.font = "100px Verdana";
         Dio.style.visibility = 'hidden';
+        Shrek.style.visibility = 'hidden';
         StartButton.style.visibility = 'hidden';
         startgame = 1
         background.src = "assets/Scenes/Hatfield_Forest_1.png";
         requestAnimationFrame(fun);
+        requestAnimationFrame(startGame);
+        updateCanvas();
 
     }
     if(selected == 0) {
@@ -147,6 +192,33 @@ $(document).on("click", "#StartButton", function() {
 
 });
 
+
+
+var inBattle = 0;
+
+//This is going to be the battle menus and encounters
+
+function startGame() {
+    faceicon.x = 1;
+    faceicon.y = 1;
+    faceicon.style = "position:absolute; width: 100px; height: 145px; top:400px; left: 750px; visibility: visible;";
+}
+
+/*Later
+function rngencounters() {
+    var rnd = Math.floor(Math.random() * 100) + 1;
+    if(rnd < 0.1) {
+        diosprite.x = 1
+        inBattle = 1
+        console.log('Battle started!')
+    return 
+    }
+    setInterval(rngencounters, 1);
+
+
+
+}
+*/
 
 
 </script>
@@ -171,7 +243,7 @@ $(document).on("click", "#StartButton", "", function() {
 
 });*/
 
-var diosprite = {
+var sprite = {
     height: 100,
     width: 145,
     x: 100,
@@ -186,30 +258,35 @@ var speed = 100; // px per second
 
 var activeKey = 0;
 document.addEventListener('keydown', function(e) {
+    if(inBattle == 1) {
+        return
+    }
     if (activeKey == e.keyCode) return;
     activeKey = e.keyCode;
     
     //left
     if (e.keyCode == 37) {
         console.log('start moving LEFT');
-        dx = -1;
+        dx = -3;
     }
     //top
     else if (e.keyCode == 38) {
         console.log('start moving UP');
-        dy = -1;
+        dy = -3;
     }
     //right
     else if (e.keyCode == 39) {
         console.log('start moving RIGHT');
-        dx = 1;
+        dx = 3;
     }
     //bottom
     else if (e.keyCode == 40) {
         console.log('start moving DOWN');
-        dy = 1;
+        dy = 3;
     }
+
 });
+
 document.addEventListener('keyup', function(e) {
     switch (e.keyCode) {
         case 37: // left
@@ -228,8 +305,8 @@ document.addEventListener('keyup', function(e) {
     activeKey = 0;
 });
 
-function renderdio(){
-    ctx.fillRect(diosprite.x, diosprite.y, diosprite.width, diosprite.height);
+function render(){
+    ctx.fillRect(sprite.x, sprite.y, sprite.width, sprite.height);
 }
 
 function updateCanvas(){
@@ -239,18 +316,37 @@ function updateCanvas(){
     }
 }
 
-
+var drawn = 0
 
 
 function fun(){
     updateCanvas();
     
-    diosprite.x += dx / 60 * speed;
-    diosprite.y += dy / 60 * speed;
-    renderdio();
+    sprite.x += dx / 90 * speed;
+    sprite.y += dy / 90 * speed;
+    render();
     
     requestAnimationFrame(fun);
+    if(inBattle == 1) {
+        if(drawn == 1) {
+        updateCanvas();
+        
+        sprite.x += dx / 90 * speed;
+        sprite.y += dy / 90 * speed;
+        render();
+        requestAnimationFrame(fun);
+        }
+        updateCanvas();
+        
+        sprite.x += dx / 90 * speed;
+        sprite.y += dy / 90 * speed;
+        ctx.fillRect(1,1,100,100);
+        render();
+        drawn = 1;
+        requestAnimationFrame(fun);
+
+    }
 }
 
-
 </script>
+
