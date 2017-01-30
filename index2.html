@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+
+<body>
+
+<center><canvas id="canvas" width="1300" height="700" style="border:1px solid #000000;"></canvas>
+</center>
+
+
+
+
+</body>
+
+
+
+<style>
+
+#canvas_id {
+	z-index: 1;
+}
+
+</style>
+
+
+
+
+
+
+
+<script>
+
+//Define the canvas
+
+var c=document.getElementById("canvas");
+var ctx=c.getContext("2d");
+
+
+
+
+//Define the player
+
+window.onload = function(){
+}
+
+var background = new Image();
+background.src = "assets/scene/trees-and-grass.jpg";
+
+background.onload = function(){
+	ctx.drawImage(background,0,-300);
+}
+
+
+
+
+</script>
+
+
+
+
+
+<script>
+
+//Movement
+
+var player = {
+    src: "assets/character/idubbz.png",
+    x: 0,
+    y: 0
+}
+
+</script>
